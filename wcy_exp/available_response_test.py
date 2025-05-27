@@ -1,0 +1,6 @@
+import re
+resp = "Good morning Isabella! It seems we're a bit out of date. For Valentine's Day party planning on February 14th at 5pm, let's set up a schedule that ensures everyone is free by then. Here’s an update:\n\n### Valentine's Day Party at Hobbs Cafe: February 14th, 2023\n- **Location:** The cafe (Hobbs Cafe)\n- **Date:** February 14th, 2023\n- **Time:** 5pm to 7pm\n\nHere’s the plan:\n\n1. **Prepare Party Material:** Isabella is gathering party material to ensure everything looks nice and proper.\n2. **Party Time:** At 5:00 pm, everyone should arrive at Hobbs Cafe for the party.\n\n### Additional Notes:\n- **Lifestyle:** She usually goes to bed around 11pm and wakes up around 6am.\n- **Daily Plan Requirement:** Isabella Rodriguez opens Hobbs Cafe at 8am everyday, so she works at the counter until 8pm.\n\nFeel free to let us know if you have any other details or modifications needed!"
+# cr = int(resp.strip().lower().split("am")[0])
+# print(cr)
+matches = re.findall(r'\b\d{1,2}\s*am\b', resp, flags=re.IGNORECASE)
+print(matches)

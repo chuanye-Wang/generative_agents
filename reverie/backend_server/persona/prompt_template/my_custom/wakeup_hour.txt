@@ -1,0 +1,9 @@
+wakeup_hour.txt
+
+!<INPUT 1>!: agent name
+!<INPUT 1>!: iss
+!<INPUT 2>!: name 
+!<INPUT 3>!: event description
+
+<commentblockmarker>###</commentblockmarker>
+according to the text, just output the time for the person to wake. (like 6am, 8pm...)

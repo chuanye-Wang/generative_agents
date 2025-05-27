@@ -1,0 +1,14 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug reverie.py",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/reverie/backend_server/reverie.py",
+      "cwd": "${workspaceFolder}/reverie/backend_server",
+      "console": "integratedTerminal",
+      "justMyCode": false,
+    }
+  ]
+}

@@ -371,12 +371,27 @@ def run_gpt_prompt_task_decomp(persona,
       else: 
         _cr += [i]
     for count, i in enumerate(_cr): 
-      k = [j.strip() for j in i.split("(duration in minutes:")]
-      task = k[0]
-      if task[-1] == ".": 
-        task = task[:-1]
-      duration = int(k[1].split(",")[0].strip())
-      cr += [[task, duration]]
+      # k = [j.strip() for j in i.split("(duration in minutes:")]
+      # task = k[0]
+      # if task[-1] == ".": 
+      #   task = task[:-1]
+      # print("k = ", k)
+      # duration = int(k[1].split(",")[0].strip())
+      # cr += [[task, duration]]
+
+      if "duration in minutes" in i: 
+        k = [j.strip() for j in i.split("(duration in minutes:")]
+      elif "duration" in i:
+        k = [j.strip() for j in i.split("(duration:")]
+        task = k[0]
+        if task[-1] == ".": 
+          task = task[:-1]
+        print("k = ", k)
+        duration = int(k[1].split(",")[0].strip())
+        cr += [[task, duration]]
+      else:
+        task = i
+        duration = 0 #arbitrary value, don't know if 0 minutes will hurt anything
 
     total_expected_min = int(prompt.split("(total duration in minutes")[-1]
                                    .split("):")[0].strip())
@@ -399,7 +414,7 @@ def run_gpt_prompt_task_decomp(persona,
       for i in range(1, 6): 
         curr_min_slot[-1 * i] = last_task
     elif len(curr_min_slot) < total_expected_min: 
-      last_task = curr_min_slot[-1]
+      last_task = curr_min_slot[-1] # 这里会报错，是因为gpt返回的是空列表，debug看一下这里到底为什么
       for i in range(total_expected_min - len(curr_min_slot)):
         curr_min_slot += [last_task]
 

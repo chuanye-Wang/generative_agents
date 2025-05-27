@@ -35,6 +35,12 @@ from utils import *
 from maze import *
 from persona.persona import *
 
+import sys
+
+# Add the path to sys.path
+sys.path.append("/home/andy/user_home/chuanye/generative_agents/reverie/backend_server")
+
+
 ##############################################################################
 #                                  REVERIE                                   #
 ##############################################################################
@@ -611,54 +617,4 @@ if __name__ == '__main__':
   rs = ReverieServer(origin, target)
   rs.open_server()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  

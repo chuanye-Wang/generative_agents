@@ -8,8 +8,20 @@ import json
 import random
 import openai
 import time 
+import ollama
 
 from utils import *
+
+# Ollama API 配置
+OLLAMA_API_URL = "http://localhost:11434"
+# MODEL = "deepseek-v2:16b"
+# MODEL = 'deepseek-r1:32b' # 太慢了，看来需要1B左右规模的合适，16B顶头了
+# MODEL = 'qwen3:8b' # 出现了返回空列表的错误
+# MODEL = 'qwen3:1.7b' # 雀食速度很快，
+# MODEL = 'qwen3:0.6b' # 由于输出的内容包含深思内容，并非是直接的回答，导致无法使用，这个问题普遍存在于带深思的模型
+MODEL = "qwen2.5:0.5b" 
+EMBEDDING_MODEL = "mxbai-embed-large:latest"
+
 
 openai.api_key = openai_api_key
 
@@ -19,11 +31,12 @@ def temp_sleep(seconds=0.1):
 def ChatGPT_single_request(prompt): 
   temp_sleep()
 
-  completion = openai.ChatCompletion.create(
-    model="gpt-3.5-turbo", 
-    messages=[{"role": "user", "content": prompt}]
+  completion = ollama.chat(
+  model=MODEL,
+  messages=[{"role": "user", "content": prompt}],
   )
-  return completion["choices"][0]["message"]["content"]
+  return completion['message']['content']
+
 
 
 # ============================================================================
@@ -66,19 +79,19 @@ def ChatGPT_request(prompt):
                    the parameter and the values indicating the parameter 
                    values.   
   RETURNS: 
-    a str of GPT-3's response. 
+    a str of Ollama's response. 
   """
   # temp_sleep()
   try: 
-    completion = openai.ChatCompletion.create(
-    model="gpt-3.5-turbo", 
-    messages=[{"role": "user", "content": prompt}]
+    completion = ollama.chat(
+      model=MODEL,
+      messages=[{"role": "user", "content": prompt}],
     )
-    return completion["choices"][0]["message"]["content"]
+    return completion['message']['content']
   
   except: 
-    print ("ChatGPT ERROR")
-    return "ChatGPT ERROR"
+    print ("Ollama ERROR")
+    return "Ollama ERROR"
 
 
 def GPT4_safe_generate_response(prompt, 
@@ -207,21 +220,15 @@ def GPT_request(prompt, gpt_parameter):
     a str of GPT-3's response. 
   """
   temp_sleep()
-  try: 
-    response = openai.Completion.create(
-                model=gpt_parameter["engine"],
-                prompt=prompt,
-                temperature=gpt_parameter["temperature"],
-                max_tokens=gpt_parameter["max_tokens"],
-                top_p=gpt_parameter["top_p"],
-                frequency_penalty=gpt_parameter["frequency_penalty"],
-                presence_penalty=gpt_parameter["presence_penalty"],
-                stream=gpt_parameter["stream"],
-                stop=gpt_parameter["stop"],)
-    return response.choices[0].text
-  except: 
-    print ("TOKEN LIMIT EXCEEDED")
-    return "TOKEN LIMIT EXCEEDED"
+  try: # 看来这里需要加模板
+    completion = ollama.chat(
+      model=MODEL,
+      messages=[{"role": "user", "content": prompt}],
+    )
+    return completion['message']['content']
+  except:
+    print("\033[31mError in GPT_request\033[0m")
+
 
 
 def generate_prompt(curr_input, prompt_lib_file): 
@@ -273,12 +280,15 @@ def safe_generate_response(prompt,
   return fail_safe_response
 
 
-def get_embedding(text, model="text-embedding-ada-002"):
+def get_embedding(text, model=EMBEDDING_MODEL):
   text = text.replace("\n", " ")
   if not text: 
     text = "this is blank"
-  return openai.Embedding.create(
-          input=[text], model=model)['data'][0]['embedding']
+  
+  response = ollama.embeddings(model=model, prompt=text)
+  embedding = response["embedding"]
+  return embedding
+
 
 
 if __name__ == '__main__':
