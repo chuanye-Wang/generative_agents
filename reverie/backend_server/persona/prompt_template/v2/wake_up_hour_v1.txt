@@ -6,6 +6,8 @@ Variables:
 !<INPUT 2>! -- Persona first names
 
 <commentblockmarker>###</commentblockmarker>
+Please respond with exactly one specific time, in the format from "1am" to "12am" or from "1pm" to "12pm", such as "8am" or "11pm". Do not provide any explanations or additional content—just return a single time string.
+Based on the following information, determine !<INPUT 2>!'s wake-up time:
 !<INPUT 0>!
 
 In general, !<INPUT 1>!

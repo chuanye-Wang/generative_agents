@@ -8,6 +8,7 @@ static_dirs/*
 environment/frontend_server/storage/*
 environment/frontend_server/temp_storage/*
 
+
 bin/
 include/
 pip-selfcheck.json

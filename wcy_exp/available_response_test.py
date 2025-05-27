@@ -1,6 +1,18 @@
 import re
-resp = "Good morning Isabella! It seems we're a bit out of date. For Valentine's Day party planning on February 14th at 5pm, let's set up a schedule that ensures everyone is free by then. Here’s an update:\n\n### Valentine's Day Party at Hobbs Cafe: February 14th, 2023\n- **Location:** The cafe (Hobbs Cafe)\n- **Date:** February 14th, 2023\n- **Time:** 5pm to 7pm\n\nHere’s the plan:\n\n1. **Prepare Party Material:** Isabella is gathering party material to ensure everything looks nice and proper.\n2. **Party Time:** At 5:00 pm, everyone should arrive at Hobbs Cafe for the party.\n\n### Additional Notes:\n- **Lifestyle:** She usually goes to bed around 11pm and wakes up around 6am.\n- **Daily Plan Requirement:** Isabella Rodriguez opens Hobbs Cafe at 8am everyday, so she works at the counter until 8pm.\n\nFeel free to let us know if you have any other details or modifications needed!"
-# cr = int(resp.strip().lower().split("am")[0])
-# print(cr)
-matches = re.findall(r'\b\d{1,2}\s*am\b', resp, flags=re.IGNORECASE)
-print(matches)
+
+def __func_clean_up(gpt_response, prompt=""):
+    cr = []
+    _cr = gpt_response.split(")")
+    for i in _cr: 
+        if i[-1].isdigit(): 
+            i = i[:-1].strip()
+            if i and (i[-1].isdigit()): 
+                i = i[:-1].strip()
+        if i and (i[-1] == "." or i[-1] == ","): 
+            cr += [i[:-1].strip()]
+    return cr
+
+desp = "1) wake up and complete the morning routine at 6:00 am,\n2) check on Hobbs Cafe's inventory and prepare for the day from 7:00 am to 8:00 am,\n3) open Hobbs Cafe at 8:00 am, welcoming customers and starting to work at the counter until 5:00 pm, \n4) begin planning the Valentine's Day party setup from 5:00 pm to 6:00 pm,\n5) send out invitations and announcements for the Valentine's Day party to her customers from 6:00 pm to 6:30 pm,\n6) continue preparing decorations and snacks for the party until 7:00 pm,\n7) inform Hobbs Cafe staff about the evening plans at 7:00 pm,\n8) arrive at Hobbs Cafe with party materials from 7:15 pm, \n9) set up the cafe for the Valentine's Day party from 7:30 pm to 8:00 pm, \n10) start welcoming guests and hosting the party from 8:00 pm to 10:00 pm,\n11) assist with serving food and drinks during the party from 8:00 pm to 10:00 pm,\n12) close Hobbs Cafe at 10:00 pm, \n13) clean up the cafe after the party from 10:00 pm to 11:30 pm,\n14) go over the day’s events and plan for tomorrow with staff from 11:30 pm to 12:00 am,\n15) go to bed at 12:00 am," 
+cr = __func_clean_up(desp)
+print(cr)
+print(len(cr))

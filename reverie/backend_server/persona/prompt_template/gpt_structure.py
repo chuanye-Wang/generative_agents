@@ -19,7 +19,8 @@ OLLAMA_API_URL = "http://localhost:11434"
 # MODEL = 'qwen3:8b' # 出现了返回空列表的错误
 # MODEL = 'qwen3:1.7b' # 雀食速度很快，
 # MODEL = 'qwen3:0.6b' # 由于输出的内容包含深思内容，并非是直接的回答，导致无法使用，这个问题普遍存在于带深思的模型
-MODEL = "qwen2.5:0.5b" 
+# MODEL = "qwen2.5:0.5b" #  太笨了，每次推理起床时间都不一样，而且不合理
+MODEL = 'qwen2.5:7b'
 EMBEDDING_MODEL = "mxbai-embed-large:latest"
 
 
@@ -220,7 +221,7 @@ def GPT_request(prompt, gpt_parameter):
     a str of GPT-3's response. 
   """
   temp_sleep()
-  try: # 看来这里需要加模板
+  try:
     completion = ollama.chat(
       model=MODEL,
       messages=[{"role": "user", "content": prompt}],

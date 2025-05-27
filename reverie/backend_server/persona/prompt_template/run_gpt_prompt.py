@@ -111,13 +111,23 @@ def run_gpt_prompt_daily_plan(persona,
     return prompt_input
 
   def __func_clean_up(gpt_response, prompt=""):
+    # cr = []
+    # _cr = gpt_response.split(")")
+    # for i in _cr: 
+    #   if i[-1].isdigit(): 
+    #     i = i[:-1].strip()
+    #     if i[-1] == "." or i[-1] == ",": 
+    #       cr += [i[:-1].strip()]
+    # return cr
     cr = []
     _cr = gpt_response.split(")")
     for i in _cr: 
-      if i[-1].isdigit(): 
-        i = i[:-1].strip()
-        if i[-1] == "." or i[-1] == ",": 
-          cr += [i[:-1].strip()]
+        if i[-1].isdigit(): 
+            i = i[:-1].strip()
+            if i and (i[-1].isdigit()): 
+                i = i[:-1].strip()
+        if i and (i[-1] == "." or i[-1] == ","): 
+            cr += [i[:-1].strip()]
     return cr
 
   def __func_validate(gpt_response, prompt=""):
@@ -148,8 +158,8 @@ def run_gpt_prompt_daily_plan(persona,
 
   output = safe_generate_response(prompt, gpt_param, 5, fail_safe,
                                    __func_validate, __func_clean_up)
-  output = ([f"wake up and complete the morning routine at {wake_up_hour}:00 am"]
-              + output)
+  # output = ([f"wake up and complete the morning routine at {wake_up_hour}:00 am"]
+  #             + output)
 
   if debug or verbose: 
     print_run_prompts(prompt_template, persona, gpt_param, 

@@ -11,4 +11,21 @@ Variables:
 !<INPUT 0>!
 
 In general, !<INPUT 1>!
-Today is !<INPUT 2>!. Here is !<INPUT 3>!'s plan today in broad-strokes (with the time of the day. e.g., have a lunch at 12:00 pm, watch TV from 7 to 8 pm): 1) wake up and complete the morning routine at !<INPUT 4>!, 2)
+Today is !<INPUT 2>!.
+Generate !<INPUT 3>!'s full-day plan in the following format.(remember to add ")")
+1) wake up and complete the morning routine at !<INPUT 4>!  
+2) <action> at <exact time> or from <start time> to <end time>,  
+3) <action> at <exact time> or from <start time> to <end time>,  
+...
+N) go to bed at <exact time>
+
+IMPORTANT:
+- Use **`)`**, not a period or dot. For example: use `1)`, not `1.`.
+- Each line must end with a comma and a line break.
+- Do not use bullet points or other formats.
+- Follow this format exactly and do not change the numbering style.
+- Numbering must be continuous and start from 1, increasing by 1 for each item, without skipping any number.
+- Each item must end with a comma `,` followed by a newline.
+
+Start the plan with this:
+1) wake up and complete the morning routine at !<INPUT 4>!,
